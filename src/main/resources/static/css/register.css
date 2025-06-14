@@ -12,6 +12,9 @@ body {
     line-height: 1.6;
 }
 
+
+
+
 /* Conteneur principal */
 .register-container {
     display: flex;
@@ -164,4 +167,15 @@ body {
     .register-form-wrapper h1 {
         font-size: 1.5rem;
     }
+}
+
+
+
+.register-container  .error-message {
+    position: absolute;
+    top: 90%;
+    left: 0;
+    color: red;
+    font-size: 0.9em;
+    margin-top: 4px;
 }

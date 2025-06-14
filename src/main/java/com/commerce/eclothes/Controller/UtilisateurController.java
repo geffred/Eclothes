@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import com.commerce.eclothes.Services.UtilisateurService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @Controller
 public class UtilisateurController {
@@ -31,7 +33,11 @@ public class UtilisateurController {
     }
 
     @PostMapping("/register")
-    public String processRegistration(@ModelAttribute Utilisateur utilisateur) {
+    public String processRegistration(@Valid @ModelAttribute Utilisateur utilisateur, BindingResult result,
+            Model model) {
+        if (result.hasErrors()) {
+            return "register"; // Retourne à la vue avec les erreurs
+        }
         utilisateurService.enregistrerNouvelUtilisateur(utilisateur);
         return "redirect:/login";
     }

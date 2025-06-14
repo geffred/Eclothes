@@ -123,3 +123,13 @@ body {
         align-items: center;
     }
 }
+
+.login-container .error-message {
+    color: red;
+    background-color: #ffe6e6;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid red;
+    border-radius: 4px;
+    text-align: center;
+}

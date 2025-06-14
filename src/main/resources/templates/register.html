@@ -14,20 +14,27 @@
         <div class="register-form-wrapper">
             <h1>Créer un compte</h1>
             <form th:action="@{/register}" th:object="${utilisateur}" method="post" class="register-form">
+
                 <div class="form-group">
                     <input type="text" th:field="*{nom}" placeholder="Nom" required>
                     <i class="fas fa-user"></i>
+                    <div class="error-message" th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></div>
                 </div>
+            
                 <div class="form-group">
                     <input type="email" th:field="*{email}" placeholder="Email" required>
                     <i class="fas fa-envelope"></i>
+                    <div class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
                 </div>
+            
                 <div class="form-group">
                     <input type="password" th:field="*{motDePasse}" placeholder="Mot de passe" required>
                     <i class="fas fa-lock"></i>
+                    <div class="error-message" th:if="${#fields.hasErrors('motDePasse')}" th:errors="*{motDePasse}"></div>
                 </div>
+            
                 <button type="submit" class="btn-register">S'inscrire</button>
-                
+            
                 <div class="social-register">
                     <p class="divider">ou s'inscrire avec</p>
                     <a href="/oauth2/authorization/google" class="btn-google">
@@ -35,11 +42,12 @@
                         <span>Google</span>
                     </a>
                 </div>
-
+            
                 <div class="form-footer">
                     <span>Déjà un compte ? <a href="/login">Se connecter</a></span>
                 </div>
             </form>
+            
         </div>
     </main>
 

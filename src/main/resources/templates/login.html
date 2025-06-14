@@ -14,6 +14,12 @@
     <main class="login-container">
         <div class="login-form-wrapper">
             <h1>Connexion</h1>
+
+            <!-- ✅ Affichage d'une erreur globale si "error=true" dans l'URL -->
+            <div class="error-message" th:if="${param.error}">
+                Identifiants incorrects. Veuillez réessayer.
+            </div>
+
             <form th:action="@{/login}" method="post" class="login-form">
                 <div class="form-group">
                     <input type="text" name="email" placeholder="Email" required>

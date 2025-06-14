@@ -17,16 +17,22 @@ import com.commerce.eclothes.Repository.UtilisateurRepository;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
+
         @Autowired
         private UtilisateurRepository utilisateurRepository;
 
         @Override
         public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
                 Utilisateur utilisateur = utilisateurRepository.findByEmail(email)
-                                .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé"));
+                                .orElseThrow(() -> new UsernameNotFoundException(
+                                                "Aucun utilisateur trouvé avec l'email: " + email));
 
                 List<GrantedAuthority> authorities = utilisateur.getRoles().stream()
-                                .map(role -> new SimpleGrantedAuthority(role)) // Utilisez directement le String
+                                .map(role -> {
+                                        // Assure que le rôle commence par ROLE_ si ce n'est pas déjà le cas
+                                        String roleName = role.startsWith("ROLE_") ? role : "ROLE_" + role;
+                                        return new SimpleGrantedAuthority(roleName);
+                                })
                                 .collect(Collectors.toList());
 
                 return new CustomUserDetails(

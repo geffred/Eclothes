@@ -24,15 +24,15 @@ import jakarta.servlet.http.HttpSession;
 public class SecurityConfig {
 
         @Autowired
-        CustomOAuth2UserService customOAuth2UserService;
+        private CustomOAuth2UserService customOAuth2UserService;
+
+        @Autowired
+        private CustomUserDetailsService userDetailsService;
 
         @Bean
         public PasswordEncoder passwordEncoder() {
                 return new BCryptPasswordEncoder();
         }
-
-        @Autowired
-        private CustomUserDetailsService userDetailsService;
 
         @Bean
         public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -44,6 +44,9 @@ public class SecurityConfig {
                                                 .anyRequest().authenticated())
                                 .formLogin(form -> form
                                                 .loginPage("/login")
+                                                .loginProcessingUrl("/login") // Ajout important
+                                                .usernameParameter("email") // Correspond au champ du formulaire
+                                                .passwordParameter("password") // Correspond au champ du formulaire
                                                 .defaultSuccessUrl("/dashboard", true)
                                                 .successHandler(authenticationSuccessHandler())
                                                 .permitAll())
@@ -66,7 +69,6 @@ public class SecurityConfig {
         @Bean
         public AuthenticationSuccessHandler authenticationSuccessHandler() {
                 return (request, response, authentication) -> {
-                        // Pour les connexions normales (formulaire)
                         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
                         HttpSession session = request.getSession();
                         session.setAttribute("user", userDetails);
@@ -77,7 +79,6 @@ public class SecurityConfig {
         @Bean
         public AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler() {
                 return (request, response, authentication) -> {
-                        // Pour les connexions OAuth2 (Google, etc.)
                         OAuth2User oauthUser = (OAuth2User) authentication.getPrincipal();
                         HttpSession session = request.getSession();
                         session.setAttribute("user", oauthUser);

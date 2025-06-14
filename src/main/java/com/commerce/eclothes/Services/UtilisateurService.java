@@ -9,6 +9,7 @@ import com.commerce.eclothes.Repository.UtilisateurRepository;
 
 @Service
 public class UtilisateurService {
+
     @Autowired
     private UtilisateurRepository utilisateurRepository;
 
@@ -16,8 +17,14 @@ public class UtilisateurService {
     private PasswordEncoder passwordEncoder;
 
     public Utilisateur enregistrerNouvelUtilisateur(Utilisateur utilisateur) {
+        // Encodage du mot de passe
         utilisateur.setMotDePasse(passwordEncoder.encode(utilisateur.getMotDePasse()));
-        utilisateur.getRoles().add("ROLE_USER");
+
+        // Vérification et ajout du rôle USER
+        if (utilisateur.getRoles() == null || utilisateur.getRoles().isEmpty()) {
+            utilisateur.getRoles().add("USER");
+        }
+
         return utilisateurRepository.save(utilisateur);
     }
 }

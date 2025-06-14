@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head">
+    <link rel="stylesheet" href="/css/user_products_style.css">
+    <title>Nos Produits</title>
+</head>
+<body>
+<header th:replace="fragments/header :: header"></header>
+
+<main class="main-content">
+    <div class="container">
+        <div class="page-header">
+            <h1>Découvrez nos produits</h1>
+            <p class="product-count" th:text="'Total: ' + ${#lists.size(produits)} + ' produits disponibles'"></p>
+        </div>
+
+        <div class="filter-section">
+            <div class="filter-group">
+                <select id="category-filter" class="form-control">
+                    <option value="all">Toutes les catégories</option>
+                    <option th:each="categorie : ${categories}" 
+                            th:value="${categorie.id}" 
+                            th:text="${categorie.nom}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div th:if="${produits == null or produits.empty}">
+            <div class="alert alert-info">
+                Aucun produit disponible pour le moment. Revenez bientôt !
+            </div>
+        </div>
+
+        <div class="products-grid" th:unless="${produits == null or produits.empty}">
+            <div th:each="produit : ${produits}" class="product-card" th:title="${'Voir détails: ' + produit.nom}">
+                <div class="product-image">
+                    <img th:src="${produit.thumbnail}" 
+                         alt="Image du produit">
+                </div>
+                
+                <div class="product-details">
+                    <h3 class="product-name" th:text="${produit.nom}"></h3>
+                    <div class="price-container">
+                        <span class="product-price" 
+                              th:text="${'€' + produit.prix }"></span>
+                        </span>
+                    </div>
+                    
+                    <a th:href="@{/produits/detail/{id}(id=${produit.id})}" class="view-details-btn">
+                        <i class="fas fa-eye"></i> Voir le produit
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+
+<!-- Font Awesome pour les icônes -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>

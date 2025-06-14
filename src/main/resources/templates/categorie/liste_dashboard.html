@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head">
+    <title>Liste des Catégories</title>
+</head>
+<body>
+<header th:replace="fragments/header :: header"></header>
+
+<main class="main-content">
+    <div class="container">
+        <div class="page-header">
+            <h1>Gestion des Catégories</h1>
+            <a th:href="@{/categories/dashboard/ajouter}" class="btn">Ajouter une catégorie</a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Thumbnail</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="categorie : ${categories}">
+                        <td th:text="${categorie.id}"></td>
+                        <td th:text="${categorie.nom}"></td>
+                        <td>
+                            <img th:src="${categorie.thumbnail}" alt="Thumbnail" class="thumbnail" width="60" />
+                        </td>
+                        <td th:text="${categorie.description} ?: 'Non renseignée'"></td>
+                        <td class="actions">
+                            <a th:href="@{/categories/dashboard/modifier/{id}(id=${categorie.id})}" class="btn-edit">
+                                <i class="fas fa-edit"></i> Modifier
+                            </a>
+                            <a th:href="@{/categories/dashboard/supprimer/{id}(id=${categorie.id})}" class="btn-delete">
+                                <i class="fas fa-trash"></i> Supprimer
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

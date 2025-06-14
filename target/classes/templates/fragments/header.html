@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eclothes Market</title>
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/user_categorie_style.css">
+    <link rel="stylesheet" href="/css/user_produit_style.css">
+    <link rel="stylesheet" href="/css/product_detail_style.css">
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/register.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="shortcut icon" href="/img/logo.svg" type="image/x-icon">
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <div class="logo">
+                <img src="/img/logo.svg" alt="Eclothes Logo" class="logo-image">
+                <a th:href="@{/}">Eclothes</a>
+            </div>
+            
+            <!-- Menu Burger pour mobile -->
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a th:href="@{/}">Accueil</a></li>
+                    <li><a th:href="@{/categories/}">Catégories</a></li>
+                    <li><a th:href="@{/produits/}">Produits</a></li>
+                    <li><a href="/#about">À propos</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <span th:if="${nom}" th:text="'Bienvenue, ' + ${nom} + '!'" ></span>
+                </ul>
+
+                <div class="header-actions" id="mobile">
+                    <a th:unless="${nom}" href="/register" class="user-icon" aria-label="User account">
+                        <i class="fas fa-user"></i>
+                        <span class="mobile-text">Se connecter</span>
+                    </a>
+
+                    <!-- Bouton déconnexion mobile -->
+                    <form th:if="${nom}" th:action="@{/logout}" method="post" style="display:inline;">
+                        <button type="submit" class="logout-icon" aria-label="Déconnexion" style="background:none; border:none; cursor:pointer;">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span class="mobile-text">Déconnexion</span>
+                        </button>
+                    </form>
+
+                    <a href="/cart" class="cart-icon" aria-label="Shopping cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="mobile-text">Panier</span>
+                    </a>
+                </div>
+
+            </nav>
+            
+            <div class="header-actions">
+                <a th:unless="${nom}" href="/register" class="user-icon" aria-label="User account">
+                    <i class="fas fa-user"></i>
+                    <span class="mobile-text">S'inscrire</span>
+                </a>
+            
+                <!-- Bouton de déconnexion si connecté -->
+                <form th:if="${nom}" th:action="@{/logout}" method="post" class="logout-form" style="display: inline;">
+                    <button type="submit" class="logout-icon" aria-label="Déconnexion" style="background: none; border: none; cursor: pointer;">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="mobile-text">Déconnexion</span>
+                    </button>
+                </form>
+            
+                <a href="/cart" class="cart-icon" aria-label="Shopping cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="mobile-text">Panier</span>
+                </a>
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const mainNav = document.querySelector('.main-nav');
+    
+    menuToggle.addEventListener('click', function() {
+        mainNav.classList.toggle('active');
+        menuToggle.innerHTML = mainNav.classList.contains('active') ? 
+            '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+    });
+    
+    // Fermer le menu quand un lien est cliqué
+    const navLinks = document.querySelectorAll('.main-nav a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            if (window.innerWidth <= 768) {
+                mainNav.classList.remove('active');
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+    });
+});
+    </script>
+</header>

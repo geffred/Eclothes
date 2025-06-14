@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head">
+</head>
+<body>
+<header th:replace="fragments/header :: header"></header>
+
+<!-- Carrousel Bannière -->
+<section class="hero-carousel">
+    <div class="carousel-container">
+        <div class="carousel-slide active">
+            <img src="/img/banner1.jpg" alt="Nouvelle collection">
+            <div class="carousel-content">
+                <h1>Collection Printemps/Été 2025</h1>
+                <p>Découvrez nos nouveaux designs exclusifs</p>
+                <a th:href="@{/produits/user}" class="btn-collection">Voir la collection</a>
+            </div>
+        </div>
+        <div class="carousel-slide">
+            <img src="/img/banner2.jpg" alt="Promotions">
+            <div class="carousel-content">
+                <h1>Soldes d'été</h1>
+                <p>Jusqu'à -50% sur une sélection d'articles</p>
+                <a th:href="@{/produits/user}" class="btn-collection">Voir la collection</a>
+            </div>
+        </div>
+        <div class="carousel-slide">
+            <img src="/img/banner3.jpg" alt="Nouveautés">
+            <div class="carousel-content">
+                <h1>Nouveautés</h1>
+                <p>Découvrez les dernières tendances</p>
+                <a th:href="@{/produits/user}" class="btn-collection">Voir la collection</a>
+            </div>
+        </div>
+        <button class="carousel-control prev">&#10094;</button>
+        <button class="carousel-control next">&#10095;</button>
+        <div class="carousel-dots"></div>
+    </div>
+</section>
+
+<!-- Section Services -->
+<section class="services-section">
+    <div class="container">
+        <div class="service-grid">
+            <div class="service-card">
+                <i class="fas fa-truck"></i>
+                <h3>Livraison Rapide</h3>
+                <p>Livraison en 24-48h partout en Belgique</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-undo"></i>
+                <h3>Retours Faciles</h3>
+                <p>30 jours pour changer d'avis</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-lock"></i>
+                <h3>Paiement Sécurisé</h3>
+                <p>Paiement 100% sécurisé</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-headset"></i>
+                <h3>Service Client</h3>
+                <p>Assistance 7j/7</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section Catégories -->
+<section class="categories-section container">
+    <h2 class="section-title">Nos Catégories</h2>
+    <div class="categories-grid" th:unless="${categories == null or categories.empty}">
+        <div class="category-card" th:each="categorie : ${categories}">
+            <div class="card-image" th:classappend="${categorie.thumbnail == null} ? 'no-thumbnail'">
+                <img th:if="${categorie.thumbnail != null}" th:src="${categorie.thumbnail}" alt="Image de la catégorie">
+                <span th:if="${categorie.thumbnail == null}">Image non disponible</span>
+            </div>
+            <div class="card-body">
+                <h3 class="card-title" th:text="${categorie.nom}"></h3>
+                <p class="card-text" th:text="${categorie.description} ?: 'Découvrez notre sélection de produits dans cette catégorie'"></p>
+                <a th:href="@{/produits/categorie/{id}(id=${categorie.id})}" class="btn-view">
+                    <i class="fas fa-eye"></i> Voir les produits
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Section À propos -->
+<section id="about" class="about-section">
+    <div class="container">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>À propos de nous</h2>
+                <p>Depuis 2025, nous créons des vêtements simples et confortables pour votre quotidien.
+                Nos pièces sont fabriquées avec soin en Belgique, dans le respect de l'environnement et des savoir-faire locaux.
+                Des matières douces, des coupes intemporelles, pour une mode accessible à tous.</p>
+            </div>
+            <div class="about-image">
+                <img src="/img/logo.svg" alt="À propos de nous">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section Avis Clients -->
+<section class="testimonials-section">
+    <div class="container">
+        <h2 class="section-title">Ce que disent nos clients</h2>
+        <div class="testimonials-container">
+            <div class="testimonial-card">
+                <div class="testimonial-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"Les t-shirts sont d'excellente qualité et les designs sont uniques. Livraison rapide et emballage soigné."</p>
+                <div class="testimonial-author">
+                    <img src="/img/marie_avatar.png" alt="Client 1">
+                    <span>Marie D.</span>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <p class="testimonial-text">"Je commande régulièrement et je n'ai jamais été déçu. Le service client est réactif et sympathique."</p>
+                <div class="testimonial-author">
+                    <img src="/img/thomas_avatar.png" alt="Client 2">
+                    <span>Thomas L.</span>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"Matériau très confortable et qui ne rétrécit pas au lavage. Je recommande vivement cette boutique!"</p>
+                <div class="testimonial-author">
+                    <img src="/img/sophie_avatar.png" alt="Client 3">
+                    <span>Sophie R.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section Newsletter -->
+<section class="newsletter-section">
+    <div class="container">
+        <div class="newsletter-content">
+            <h2>Abonnez-vous à notre newsletter</h2>
+            <p>Recevez en exclusivité nos offres spéciales et nouveautés</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Votre adresse email" required>
+                <button type="submit" class="btn-newsletter">S'abonner</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Section Contact -->
+<section id="contact" class="contact-section">
+    <div class="container">
+        <h2 class="section-title">Contactez-nous</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>6031 Monceau sur sambre</p>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <p>+32 467 77 43 91</p>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <p>eclothes@gmail.com</p>
+                </div>
+                <div class="contact-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+            <form id="contactForm" class="contact-form">
+                <div class="form-group">
+                    <input type="text" id="name" name="name" placeholder="Votre nom" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" name="email" placeholder="Votre email" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="subject" name="subject" placeholder="Sujet" required>
+                </div>
+                <div class="form-group">
+                    <textarea id="message" name="message" placeholder="Votre message" required></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Envoyer le message</button>
+                <div id="form-message" class="form-message"></div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script th:src="@{/js/carousel.js}"></script>
+<script th:src="@{/js/contact.js}"></script>
+</body>
+</html>

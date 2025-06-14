@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head">
+    <title>Nos Catégories de Produits</title>
+</head>
+<body>
+<header th:replace="fragments/header :: header"></header>
+
+<main class="main-content">
+    <div class="container">
+        <div class="page-header">
+            <h1>Découvrez nos catégories</h1>
+            <p class="category-count" th:text="'Total: ' + ${#lists.size(categories)} + ' catégories disponibles'"></p>
+        </div>
+
+        <div th:if="${categories == null or categories.empty}">
+            <div class="alert alert-info">
+                Aucune catégorie disponible pour le moment. Revenez bientôt !
+            </div>
+        </div>
+
+        <div class="categories-grid" th:unless="${categories == null or categories.empty}">
+            <div class="category-card" th:each="categorie : ${categories}">
+                <div class="card-image" th:classappend="${categorie.thumbnail == null} ? 'no-thumbnail'">
+                    <img th:if="${categorie.thumbnail != null}" th:src="${categorie.thumbnail}" alt="Image de la catégorie">
+                    <span th:if="${categorie.thumbnail == null}">Image non disponible</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title" th:text="${categorie.nom}"></h3>
+                    <p class="card-text" th:text="${categorie.description} ?: 'Découvrez notre sélection de produits dans cette catégorie'"></p>
+                    <a th:href="@{/produits/categorie/{id}(id=${categorie.id})}" class="btn-view">
+                        <i class="fas fa-eye"></i> Voir les produits
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+
+<!-- Font Awesome pour les icônes -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>

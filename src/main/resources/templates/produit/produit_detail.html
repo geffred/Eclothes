@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head">
+    <title th:text="${produit.nom} + ' | Détails'"></title>
+
+</head>
+<body>
+<header th:replace="fragments/header :: header"></header>
+
+<main class="main-content">
+    <div class="breadcrumb">
+        <a href="/">Accueil</a> &gt; 
+        <a th:href="@{/produits/categorie/{id}(id=${produit.categorie.id})}" 
+           th:text="${produit.categorie.nom}"></a> &gt;
+        <span th:text="${produit.nom}"></span>
+    </div>
+
+    <div class="container product-detail-container">
+        <div class="product-gallery">
+            <div class="main-image">
+                <img th:src="${produit.thumbnail}" 
+                     alt="Image principale du produit"
+                     class="zoomable">
+            </div>
+
+        </div>
+        
+        <div class="product-info">
+            <h1 class="product-title" th:text="${produit.nom}"></h1>
+            <div class="product-rating">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <a href="#reviews" class="review-link">12 avis clients</a>
+            </div>
+            
+            <div class="price-section">
+                <span class="current-price" th:text="${'€' + produit.prix }"></span>
+                <span class="tax-info">TVA incluse</span>
+            </div>
+            
+            <div class="product-meta">
+                <div class="meta-item">
+                    <i class="fas fa-tag"></i>
+                    <span class="meta-label">Catégorie:</span>
+                    <span class="meta-value" th:text="${produit.categorie.nom}"></span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-ruler-vertical"></i>
+                    <span class="meta-label">Taille:</span>
+                    <span class="meta-value" th:text="${produit.taille}"></span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-palette"></i>
+                    <span class="meta-label">Couleur:</span>
+                    <span class="meta-value" th:text="${produit.couleur}"></span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-box-open"></i>
+                    <span class="meta-label">Disponibilité:</span>
+                    <span class="meta-value stock" th:if="${produit.quantite > 0}" 
+                          th:text="${'En stock (' + produit.quantite + ' disponibles)'}"></span>
+                    <span class="meta-value out-of-stock" th:unless="${produit.quantite > 0}">Rupture de stock</span>
+                </div>
+            </div>
+            
+            <div class="product-actions">
+                
+                <button class="btn-add-to-cart">
+                    <i class="fas fa-shopping-cart"></i> Ajouter au panier
+                </button>
+            </div>
+            
+            <div class="delivery-info">
+                <i class="fas fa-truck"></i>
+                <span>Livraison gratuite à partir de 100€</span>
+            </div>
+            
+        </div>
+    </div>
+    
+    <section class="related-products container">
+        <h2>Produits similaires</h2>
+        <div class="products-grid">
+            <!-- Placeholder pour les produits similaires -->
+            <div th:each="produit : ${produits}" class="product-card" th:title="${'Voir détails: ' + produit.nom}">
+                <div class="product-image">
+                    <img th:src="${produit.thumbnail}" 
+                         alt="Image du produit">
+                </div>
+                
+                <div class="product-details">
+                    <h3 class="product-name" th:text="${produit.nom}"></h3>
+                    <div class="price-container">
+                        <span class="product-price" 
+                              th:text="${'€' + produit.prix }"></span>
+                        </span>
+                    </div>
+                    
+                    <a th:href="@{/produits/detail/{id}(id=${produit.id})}" class="view-details-btn">
+                        <i class="fas fa-eye"></i> Voir le produit
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+
+<!-- Font Awesome pour les icônes -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<script src="/js/product_detail.js"></script>
+</body>
+</html>

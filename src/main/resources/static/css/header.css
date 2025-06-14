@@ -1,0 +1,255 @@
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: #f9f9f9;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color var(--transition-speed);
+}
+
+a:hover {
+    color: var(--secondary-color);
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Header Styles */
+.header {
+    background-color: white;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-image {
+    width: 30px;
+    height: 30px;
+}
+
+.logo a {
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+}
+
+.logo a:hover {
+    color: var(--secondary-color);
+}
+
+.main-nav ul {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+}
+
+.main-nav a {
+    padding: 0.5rem 0;
+    position: relative;
+}
+
+.main-nav a:hover {
+    color: var(--secondary-color);
+}
+
+.main-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--secondary-color);
+    transition: width var(--transition-speed);
+}
+
+.main-nav a:hover::after {
+    width: 100%;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+#mobile{
+    display: none !important;
+}
+
+.header-actions a {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+}
+
+.header-actions a:hover {
+    color: var(--secondary-color);
+}
+
+.header-actions .mobile-text {
+    display: none;
+    margin-left: 0.5rem;
+    font-size: 1rem;
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--primary-color);
+}
+
+/* Ajoutez ceci à votre fichier header.css */
+.logout-form {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.logout-btn:hover {
+    color: var(--secondary-color);
+}
+
+/* Pour aligner avec les autres icônes */
+.user-icon, .logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.mobile-text, .desktop-text {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .mobile-text {
+        display: inline;
+    }
+}
+
+@media (min-width: 769px) {
+    .desktop-text {
+        display: inline;
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .header-content {
+        flex-wrap: wrap;
+        padding: 1rem;
+    }
+
+    .menu-toggle {
+        display: block;
+        order: 1;
+    }
+
+    .logo {
+        order: 0;
+        flex: 1;
+    }
+
+    .header-actions {
+        order: 2;
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 1rem;
+    }
+
+    .main-nav {
+        order: 3;
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height var(--transition-speed) ease-out;
+    }
+
+    .main-nav.active {
+        max-height: 500px;
+        padding: 1rem 0;
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .header-actions .mobile-text {
+        display: inline;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo a {
+        font-size: 1.4rem;
+    }
+
+    .header-actions {
+        display: none;
+    }
+
+    #mobile{
+        display: flex !important;
+    }
+
+    .header-actions a {
+        font-size: 1rem;
+    }
+
+    .header-actions .mobile-text {
+        font-size: 0.8rem;
+    }
+
+    .main-nav ul a{
+        display: inline-block;
+        width: 100%;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.082);
+    }
+}
